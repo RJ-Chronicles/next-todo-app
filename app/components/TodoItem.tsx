@@ -8,6 +8,7 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 
 import Modal from "./Modal";
 import FormModal from "./FormModal";
+import { useThemeContext } from "@/context/useThemeContext";
 
 const TodoItem: React.FC<{ task: ITask }> = ({ task }) => {
   const [completed, setCompleted] = useState(() => task.completed);
@@ -15,6 +16,7 @@ const TodoItem: React.FC<{ task: ITask }> = ({ task }) => {
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const router = useRouter();
+  const {isDarkMode} = useThemeContext();
 
   const handleDeleteModal = async (id: string) => {
     if (isPending) return;
@@ -43,7 +45,7 @@ const TodoItem: React.FC<{ task: ITask }> = ({ task }) => {
         <label>
           <input
             type="checkbox"
-            className="checkbox"
+            className={`checkbox ${isDarkMode ? 'checkbox-warning' : 'checkbox-primary'}`}
             onChange={handleCheckboxClick}
             disabled={isPending}
             checked={completed}
