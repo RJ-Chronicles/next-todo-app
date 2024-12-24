@@ -2,15 +2,15 @@
 import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import Modal from "./Modal";
-import { addTodo } from "@/api";
-import { useRouter } from "next/navigation";
 import FormModal from "./FormModal";
+import { useThemeContext } from "@/context/useThemeContext";
 const AddTask = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const {isDarkMode} = useThemeContext();
   return (
     <div>
       <button
-        className="btn btn-primary w-full"
+        className={`btn ${isDarkMode ? 'btn-accent text-white': 'btn-primary'} w-full`}
         onClick={(e) => setModalOpen(true)}
       >
         Add new task
