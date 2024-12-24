@@ -1,21 +1,22 @@
+'use client';
+
 import { ITask } from "@/types/tasks";
 import React from "react";
-import { MdOutlineDelete } from "react-icons/md";
-import { RiFileEditLine } from "react-icons/ri";
 import TodoItem from "./TodoItem";
+import { useThemeContext } from "@/context/useThemeContext";
 
 interface TodoListProps {
   todos: ITask[];
 }
 
 const TodoList: React.FC<TodoListProps> = ({ todos }) => {
-  console.log(todos)
+  const {isDarkMode} = useThemeContext()
   return (
     <div>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
-          <thead>
+          <thead className={`${isDarkMode ? 'text-slate-50' : ''} `}>
             <tr>
               <th className="w-[10%]">Mark Completed</th>
               <th>Task</th>
