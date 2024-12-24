@@ -8,7 +8,7 @@ const Modal: React.FC<ModalProps> = ({ modalOpen, children, setModalOpen }) => {
 
   return (
     <div className={`modal ${modalOpen ? "modal-open" : ""}`}>
-      <div className="modal-box relative">
+      <div className="modal-box relative text-gray-600">
         <button
           className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
           onClick={(e) => setModalOpen(false)}
