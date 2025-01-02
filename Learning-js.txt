@@ -1,0 +1,332 @@
+# Variables:
+
+    Short circuit is clearner than conditional operation
+    name || "Not exist"
+    name? name : "Not exist"
+    name ?? "Not exist" [null and undefined witll be considered value is missing]
+
+    function sayHello(name) {
+        return `Hello ${name || 'User'}` // name is 0 Or falsly value then It will return 'User'
+    }
+
+# Functions
+    Clean code -> Readable, Reusable, and Refactorable, 
+
+    1: Function arguments (2 or fewer ideally)
+        const menuConfig = {
+            title: 'Foo',
+            body: 'Bar',
+            buttonText: 'Baz',
+            cancellable: true
+        }
+        function createMenu(menuConfig){
+            /....
+        }
+    
+    2:  Function should do one thing
+        function emailClient(clients) {
+            clients.forEach(client => {
+                const clientRecord = database.lookup(client);
+                if (clientRecord.isActive()) {
+                    email(client)
+                }
+            })
+        }
+
+        Doing two things, emailClient and isClientactive
+
+        function emailClients(clients) {
+            clients.
+            filter(isClientActive(client))
+            .forEach(client => email(client))
+        }
+
+        function isCleintActive(client) {
+            const clientRecord = db.lookup(client);
+            return clientRecord.isActive();
+        }
+
+    3: Function name should say what they do
+
+    4: Function should only be one level of abstraction (should do only one thing)
+
+    5: Remove duplicate code
+
+    6: Don't use flags as function parameters
+
+    7: Avoid Side effects
+        Any change or effect that occurs outside of the scope of function's execution. A side effect happens when a function modifies something external to itself or interact with the outside world.
+
+        let name = "Bean Carnes"
+        function splitName() {
+            name=  name.split('')
+        }
+        console.log(name);
+
+    8: Don't write a global function
+        Array.prototype.diff = function (per) {
+        return (per === 'jack') ?? false
+        }
+
+        const arr = new Array();
+
+        const result = arr.diff('will')
+        console.log(result)
+
+        class SuperArray extends Array{
+            diff(person){
+                return person === 'jack' ?? false
+            }
+        }
+
+        class SuperArray extends Array{
+            diff(person){
+                return person === 'jack' ?? false
+            }
+        }
+        
+        const person = new SuperArray();
+        
+        console.log(person.diff('will'))
+
+    9: Favor funcitonal prograamming over imperative programming
+          let totalLineOfCode = 0;
+          for (let i = 0; i< programmerOutput.length; i++>) {
+            totoalLineOfCode += programmerOutput[i].lineOfCode;
+          }
+
+          use below rather imperative programming
+          const totalLineOfCode = programmerOutput
+                          .map(programmer => programmer.lineOfCode)
+                          .reduce((acc, lineOfCode)=> acc + lineOfCode, 0)
+                          
+
+    10: Remove Dead code
+
+
+# Objects
+    1: Use getters and setters
+
+    function makeBankAccount() {
+        //...
+        return {
+            balance:0,
+        }
+    }
+    const account  = makeBankAccount()
+    accout.balance = 2000;
+
+    function makeBankAccount() {
+        let balance = 0;
+        function getBalance() {
+            return balance;
+        }
+        function setBalance(amount) {
+            if(amount > 0)
+            balance = amount 
+        }
+        return {
+            getBalance,
+            setBalance
+        }
+    }
+    const account = makeBankAccount()
+    account.setBalance(3000);
+    console.log(account.getBalance())
+
+    2: make Objects have private members
+        function Employee(name) {
+        this.name = name;
+        }
+
+        Employee.prototype.getName = function(){
+        return this.name;
+        }
+
+        const emp = new Employee("John doe");
+
+        console.log(emp.getName())
+        delete emp.name;
+
+        console.log(emp.getName())
+
+# Classes
+    1: use ES6 classes over ES5
+
+    2: Method Chaining
+        class Car {
+        constructor() {
+            this.name= 'Honda',
+            this.model= 'LKE9308',
+            this.color= 'Blue'
+        }
+        setColor(color) {
+            this.color = color;
+            return this
+        }
+        setModel(model) {
+            this.model = model;
+            return this;
+        }
+        setName(name) {
+            this.name = name;
+            return this
+        }
+        }
+
+        const car = new Car()
+                    .setName("FZ")
+                    .setColor('Black')
+                    .setModel("BlackMate")
+
+    3: Prefer Composition over Inheritance
+        use inherietance for is a relation
+        use composition for has A relation
+
+
+# SOLID
+    SOLID principles are a set of design principles in object oriented programming that help cerate robust, scalable, and maintainable software systems.
+
+    1: Single Responsibility Principle
+        A Class should perform only one task.
+    2: Open/ Close Principle
+        You should be able to add add new functionality withoud altering existing code.
+    3: Liskon Substitution Principle
+        Derived classes must be replaceable with their base classes without breaking functionality.
+    4: Interface segregation Principle
+        Keep interface small and focused to avoid unnecessary implementation.
+        Dont force classes to implement methods they don't need
+        // BAD: Violates ISP
+            interface Worker {
+                work()
+                eat()
+            }
+            class Robot implement Worker {
+                eat() {
+                    throw new Error("Robot Don't eat")
+                }
+            }
+        // Good: Follows ISP
+            interface Worker {
+                Work
+            }
+            class Human/Robot implement Worker {
+                work(){
+                    console.log('Working....')
+                }
+            }
+    5: Dependency Inversion
+        Depends on interface or abstraction, not concrete implementation
+
+# Testing Concurrency, & Error handling
+    1: Single concept per test
+    2: use ES6 promises not callback
+        fetch(url)
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error))
+    3: Don't ignore caughe errors
+        use console.error rather log
+
+# Formatting
+    1: use Consistent capitalization
+    2: function callers and callees should be closer
+    3: Only comment things that have business logic complexity
+    4: Dont leave commented out code in your codebase
+    5: Avoid positional markers
+
+# ---------------------------------- #
+### Functional Programming In Javascript
+    Function Programming in js is a way of writing code where 
+    functions are main building blocks of your code,
+    instead of modifying data you create new one,
+    function should give the same result everytime you call them with the same input and should not affect anything outside the function, 
+    You use functions like map, filter, redu
+    class MyArray extends Array {
+        filters(fun) {
+            const arr = [];
+            for (const element of this) {
+            if (fun(element)) {
+                arr.push(element);
+            }
+            }
+            return arr;
+        }
+    }
+
+    // -----Or-------
+    Array.prototype.findIndexMethod = function(callback) {
+    let index = -1;
+    for(let i = 0; i< this.length; i++) {
+        if(callback(this[i])) {
+        index = i;
+        break;
+        }
+    }
+    return index;
+    }
+
+    const names = new MyArray();
+    names.push(...[3, 4, 5, 6, 7, 7, 8, 9])
+
+    const even = names.filters((val)=>val % 2 === 0)
+    const indexValue = [3, 4, 5, 6, 7, 7, 8, 9].findIndexMethod((val) => val === 8)
+    console.log(indexValue)
+
+    callback function generally takes three arguments: value, index, array
+
+# Higher Order Function
+    1: Functions are nothing but the value and can be passed to another function
+    2: map - Is a function on array which will transform the array element and return element
+    3: Reduce: Reduce is multitude in list transformation
+       Array.prototype.reduceFn = function(callback, initialValue) {
+        let sumTotoal = initialValue;
+        for (const num of this) {
+            sumTotoal = callback(sumTotoal, num);
+        }
+        return sumTotoal;
+        }
+
+        const reduceFnCallback = ((sum, item) => sum + item)
+        const sumTotoal = [3, 4, 5, 6, 7, 7, 8, 9].reduceFn(reduceFnCallback, 0)
+        console.log(sumTotoal)
+
+        import { readFileSync } from 'fs';
+
+        const fileData = readFileSync('./input.txt', 'utf-8');
+
+        const output = fileData
+                        .trim()
+                        .split('\n')
+                        .map(element => element.trim().split('\t'))
+                        .reduce((customers, line) => {
+                            const [name, product, price, quantity] = line;
+                            customers[name] = customers[name] || [];
+                            customers[name].push({product, price, quantity})
+                            return customers;
+                        }, {})
+        console.log(output)
+
+
+# Clouser In js 
+    A closure in js is a function that remembers the variables from its outer scope, even after that scope as finished executing.
+    const DURATION_IN_MS = 2000
+
+    function fn(name) {
+    return function() {
+            setTimeout(function(){
+                console.log(`Hey ${name}`)
+            }, DURATION_IN_MS) 
+        }
+    }
+
+const greet = fn('jack')
+greet();
+
+# Currying
+    Currying in js is technique of transforming a function that takes multiple argument into a sequence of functions, each taking a single argument.
+    Currying breaks down a function with multiple arguments into a series of functions, each accepting one argument at a time.
+
+# Recursion:
+    When a function call itself
+    

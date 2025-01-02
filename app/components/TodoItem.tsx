@@ -57,7 +57,7 @@ const TodoItem: React.FC<{ task: ITask }> = ({ task }) => {
           task.completed
             ? "line-through text-slate-300 italic"
             : "text-slate-600"
-        } w-full font-lg`}
+        } w-full font-lg text-justify`}
       >
         {task.text}
       </td>
