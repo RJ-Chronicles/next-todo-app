@@ -16,7 +16,7 @@
       "id": "1734956755889"
     },
     {
-      "completed": true,
+      "completed": false,
       "text": "Rapidly build modern websites without ever leaving your HTML.Rapidly build modern websites without ever leaving yRapidly build modern websites without ever leaving your HTML.our HTML.   const [updatedText, setUpdatedText] = useState(\"\");   const [updatedText, setUpdatedText] = useState(\"\");   const [updatedText, setUpdatedText] = useState(\"\");   const [updatedText, setUpdatedText] = useState(\"\");",
       "id": "1735026794863"
     }
