@@ -320,13 +320,155 @@
         }
     }
 
-const greet = fn('jack')
-greet();
+    const greet = fn('jack')
+    greet();
 
 # Currying
     Currying in js is technique of transforming a function that takes multiple argument into a sequence of functions, each taking a single argument.
     Currying breaks down a function with multiple arguments into a series of functions, each accepting one argument at a time.
 
 # Recursion:
-    When a function call itself
-    
+    - When a function call itself
+    const categories = [
+        {id: 'animals', 'parent': null},
+        {id: 'mammals', 'parent': 'animals'},
+        {id: 'cats', 'parent': 'mammals'},
+        {id: 'dogs', 'parent': 'mammals'},
+        {id: 'chihuahua', 'parent': 'dogs'},
+        {id: 'labrador', 'parent': 'dogs'},
+        {id: 'persian', 'parent': 'cats'},
+    ]
+
+    const makeTrees = (categories, parent) => {
+    let node = {};
+    const temp = categories
+        .filter(c => c.parent === parent)
+    console.log(temp);
+        temp.forEach(c => node[c.id] = makeTrees(categories, c.id))
+
+    return node;
+    }
+
+    console.log(JSON.stringify(makeTrees(categories, null), null, 2))
+
+# Promises
+    -   const imageLoader = (url, callback) => {
+          const image = new Image();
+          
+          image.onload= () => {
+            callback(undefined, image)
+          }
+          
+          image.onerror = () => {
+            callback(new Error('Not valid image'))
+          }
+          image.url = url;
+        }
+
+        const url = 'https://www.infogrepper.com/wp-content/uploads/2022/10/image-url-for-testing.png';
+        
+        const showImage = () => {
+          imageLoader(url, (error, data) => {
+            const imageElement = document.createElement('img');
+            imageElement.src = data.url;
+            document.body.appendChild(imageElement)
+          })
+        }
+
+        const imageLoader = (url) => {
+            return new Promise((resolve, reject)=> {
+                const image = new Image();
+                
+                image.onload= () => {
+                    resolve(undefined, image)
+                }
+                
+                image.onerror = () => {
+                    reject(new Error('Not valid image'))
+                }
+                image.url = url;
+            })
+        }
+
+        const addImage = (src) => {
+            let imgElement = document.createElement('img');
+            imageElement.src = scr;
+            document.body.appendChild(imageElement);
+        }
+
+        Promise.all([
+            imageLoader('url1'),
+            imageLoader('url2'),
+            imageLoader('url3'),
+        ]).then(images => {
+            images.forEach(image => addImage(image.src))
+        }).catch(er => {
+            console.error(er);
+        })
+
+
+# ES6
+    1: var vs const vs let
+    2: classes
+    3: Template literals
+    4: Symbols
+    5: Proxies
+        Custom behaviour when property of object get accessed!
+        let p = new Proxy(target, handler);
+        var handler = {
+            get(target, key) {
+                return ke in target ? target[key]: 40
+            }
+        }
+        var p = new Proxy({}, handler);
+
+        p.a = 30;
+        p.b = undefined;
+        console.log(p.a, p.b);
+        console.log('c' in p, p.c);
+    6: Spread Operator:
+        Spread operator spread the condensed multiple array elements as individual element.
+        - Add the elements of an existing array into a new array
+        - pass elements of an array as argument to a function
+            addThreeNumbers(...[20, 30, 40])
+        - Copy Array
+            arr = [...ar]
+        - Concatenate Arrays
+            arr = [...arr,10, ...ar]
+        
+        REST: condense multiple elements into an array
+        - function multiply(multiplier, ...theArgs)
+
+    7: Arrow Function
+        - No binding of this
+        Normal function this will refer to the global object but in arrow function this will refer to itself
+
+    8: Destructuring
+        - Assign variales from object
+        const {name, age} = person;
+        - Assign variables from nested Objects
+        const {address: {pin: code, district: dist}} = person;
+        - Assign variables from array
+            const [one, two] = ['one', 9, 'two]
+
+        - Rest Operator to Reassign Array elements
+        const [a, b, ...rest] = [40, 9, 3, 3, 2,5]
+        - Pass an object as Function's parameters;
+        functions profileUpdate({name, age, loc})
+
+    9: Map Data structure
+        store data in key value pair
+        
+    10: Import / export Modules
+        named export
+        export const PI/ function fun()
+        import * as lib from './lib'
+        lib.PI, lib.profile()
+
+        default export
+        export default function (){...}
+        import myFunc  
+
+# Introduction to Jest
+    # React with the Jest
+        
